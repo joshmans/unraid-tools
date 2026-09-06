@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CommunityApplications>
+  <Profile>
+    This repository hosts joshmans (aka shwa87 in the unRAID forums) unRAID plugins.
+
+    For support, bug reports, or feature requests, please open an issue in the appropriate github repo.
+    
+  </Profile>
+  <Icon>https://raw.githubusercontent.com/joshmans/unraid-active-directory-extras/main/active.directory/icons/activedirectoryextras.png</Icon>
+  <WebPage>https://github.com/joshmans/unraid-active-directory-extras</WebPage>
+  <!-- Optional support links -->
+  <!-- <Forum>https://forums.unraid.net/topic/137467-active-directory-extras-plugin-allows-tweaking-some-ad-settings-in-samba/</Forum> -->
+</CommunityApplications>
