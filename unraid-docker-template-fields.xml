@@ -1,0 +1,17 @@
+<Plugin>
+  <Name>Docker Template Fields</Name>
+  <Overview>Drag to reorder the fields of a Docker template, and switch a field off without deleting it. Adds a drag handle and an on/off switch to every Path, Port, Variable, Label and Device row on the Add/Edit Container page, including when installing an app from Community Apps. A disabled field stays in the template with its value but is left out of the container, which makes testing much easier.</Overview>
+  <PluginURL>https://raw.githubusercontent.com/joshmans/unraid-docker-template-fields/main/unraid-docker-template-fields.plg</PluginURL>
+  <PluginAuthor>shwa87</PluginAuthor>
+  <Icon>https://raw.githubusercontent.com/joshmans/unraid-docker-template-fields/main/icon/unraid-docker-template-fields.png</Icon>
+
+  <!-- Optional entries -->
+  <Support>https://github.com/joshmans/unraid-docker-template-fields/issues</Support>
+  <Project>https://github.com/joshmans/unraid-docker-template-fields</Project>
+
+  <!-- Valid category entries can be generated from the Application Categorizer plugin available in Apps -->
+  <Category>Tools:Utilities</Category>
+  <!-- Minimum and maximum Unraid version.  If the plugin file has min or max attributes these entries will be ignored-->
+  <MinVer>7.2</MinVer>
+
+</Plugin>
