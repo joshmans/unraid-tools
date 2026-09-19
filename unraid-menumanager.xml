@@ -1,0 +1,17 @@
+<Plugin>
+  <Name>Menu Manager</Name>
+  <Overview>Choose where every icon on the Tools and Settings pages lives. Reorder tiles and categories, rename them, create your own categories, move a tile or a whole category between Tools and Settings, hide what you never use, and optionally put everything on one unified page in the main menu (Switchboard by default). Changes are reversible: original page headers are remembered and Reset restores them exactly.</Overview>
+  <PluginURL>https://raw.githubusercontent.com/joshmans/unraid-menumanager/main/menumanager.plg</PluginURL>
+  <PluginAuthor>shwa87</PluginAuthor>
+  <Icon>https://raw.githubusercontent.com/joshmans/unraid-menumanager/main/icon/menumanager.png</Icon>
+
+  <!-- Optional entries -->
+  <Support>https://github.com/joshmans/unraid-menumanager/issues</Support>
+  <Project>https://github.com/joshmans/unraid-menumanager</Project>
+
+  <!-- Valid category entries can be generated from the Application Categorizer plugin available in Apps -->
+  <Category>Tools:System</Category>
+  <!-- Minimum and maximum Unraid version.  If the plugin file has min or max attributes these entries will be ignored-->
+  <MinVer>7.2</MinVer>
+
+</Plugin>
