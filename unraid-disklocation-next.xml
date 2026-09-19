@@ -1,0 +1,16 @@
+<Plugin>
+  <Name>Disk Location Next</Name>
+  <Overview>Maps your physical drive bays, hot-swap trays, and PCIe NVMe carriers to a visual tray map, with per-drive array/pool role, capacity, manufacturer branding, and SMART health history over time. A ground-up rewrite of the original Disk Location plugin concept, built as a standalone service against Unraid's native unraid-api (Unraid 7.2+) instead of a classic PHP webGUI plugin.</Overview>
+  <PluginURL>https://raw.githubusercontent.com/joshmans/unraid-disklocation-next/master/plugin/unraid-disklocation-next.plg</PluginURL>
+  <PluginAuthor>shwa87</PluginAuthor>
+
+  <!-- Optional entries -->
+  <Support>https://github.com/joshmans/unraid-disklocation-next/issues</Support>
+  <Project>https://github.com/joshmans/unraid-disklocation-next</Project>
+
+  <!-- Valid category entries can be generated from the Application Categorizer plugin available in Apps -->
+  <Category>Tools:System</Category>
+  <!-- Minimum and maximum Unraid version.  If the plugin file has min or max attributes these entries will be ignored-->
+  <MinVer>7.2</MinVer>
+
+</Plugin>
