@@ -12,6 +12,5 @@
   <Category>Tools:System</Category>
   <!-- Minimum and maximum Unraid version.  If the plugin file has min or max attributes these entries will be ignored-->
   <MinVer>6.9</MinVer>
-  <MaxVer>7.4</MaxVer>
 
 </Plugin>
