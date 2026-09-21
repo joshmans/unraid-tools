@@ -1,0 +1,17 @@
+<Plugin>
+  <Name>SCSI Enclosure Monitor Extended</Name>
+  <Overview>Monitor SES-capable SCSI enclosures (JBODs, disk shelves) with sesmon and get an Unraid notification when a fan, power supply, temperature sensor or drive bay reports a problem. Choose the enclosures from the ones found on your server instead of typing SAS addresses, and set poll, back-off and notification options from dropdowns; the configuration files stay editable. The Enclosure Devices page shows what each enclosure reports in plain words (Friendly view, or Raw), names every bay by the drive in it (Unraid disk, model, size, temperature) and shows an HBA's virtual enclosure as ports with the HBA firmware; alerts name the affected disks. A fork of the SCSI Enclosure Monitor plugin by desertwitch; it cannot be installed together with the original.</Overview>
+  <PluginURL>https://raw.githubusercontent.com/joshmans/unraid-sesmon-extended/main/sesmon-ext.plg</PluginURL>
+  <PluginAuthor>shwa87</PluginAuthor>
+  <Icon>https://raw.githubusercontent.com/joshmans/unraid-sesmon-extended/main/icon/sesmon-ext.png</Icon>
+
+  <!-- Optional entries -->
+  <Support>https://github.com/joshmans/unraid-sesmon-extended/issues</Support>
+  <Project>https://github.com/joshmans/unraid-sesmon-extended</Project>
+
+  <!-- Valid category entries can be generated from the Application Categorizer plugin available in Apps -->
+  <Category>Tools:System</Category>
+  <!-- Minimum and maximum Unraid version.  If the plugin file has min or max attributes these entries will be ignored-->
+  <MinVer>7.0</MinVer>
+
+</Plugin>
