@@ -1,0 +1,17 @@
+<Plugin>
+  <Name>Log Health</Name>
+  <Overview>Find the logs that are spamming and see who is behind them. Log Health reads your PHP, system and Docker container logs on a schedule, works out which messages are the same line repeating, and lists the ones that repeat too often, named after the plugin (with file and line), program or container responsible. It also shows every Docker container's log size, growth and rotation limit. A crash loop that prints a long traceback is one finding, not dozens; mute anything you know about. Choose how often it scans in plain words (every 5 minutes to once a day, default every 15 minutes), and turn each source on or off. It only reads: it never changes a log, a Docker setting or a file outside its own settings, and it makes no network connections.</Overview>
+  <PluginURL>https://raw.githubusercontent.com/joshmans/unraid-log-health/main/unraid-log-health.plg</PluginURL>
+  <PluginAuthor>shwa87</PluginAuthor>
+  <Icon>https://raw.githubusercontent.com/joshmans/unraid-log-health/main/icon/unraid-log-health.png</Icon>
+
+  <!-- Optional entries -->
+  <Support>https://github.com/joshmans/unraid-log-health/issues</Support>
+  <Project>https://github.com/joshmans/unraid-log-health</Project>
+
+  <!-- Valid category entries can be generated from the Application Categorizer plugin available in Apps -->
+  <Category>Tools:System</Category>
+  <!-- Minimum and maximum Unraid version.  If the plugin file has min or max attributes these entries will be ignored-->
+  <MinVer>7.2</MinVer>
+
+</Plugin>
