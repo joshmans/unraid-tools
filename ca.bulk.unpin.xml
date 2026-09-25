@@ -6,4 +6,5 @@
   <Overview>Adds a "Hide Installed" checkbox and a "Unpin Installed Apps" button to the Pinned Apps view in Community Applications, so you can quickly clean up pinned apps you've already installed. Works with both stock Community Applications and the ghzgod/unraid-modern-appstore alternate view.</Overview>
   <Category>Tools:System</Category>
   <PluginAuthor>shwa87</PluginAuthor>
+  <Icon>https://raw.githubusercontent.com/joshmans/ca.bulk.unpin/main/icon/ca.bulk.unpin.png</Icon>
 </Plugin>

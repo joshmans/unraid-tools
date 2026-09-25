@@ -3,6 +3,7 @@
   <Overview>This plugin adds additional tunable settings to the SMB Settings when Active Directory is enabled.</Overview>
   <PluginURL>https://raw.githubusercontent.com/joshmans/unraid-active-directory-extras/main/active.directory.plg</PluginURL>
   <PluginAuthor>shwa87</PluginAuthor>
+  <Icon>https://raw.githubusercontent.com/joshmans/unraid-active-directory-extras/main/icon/unraid-active-directory-extras.png</Icon>
 
   <!-- Optional entries -->
   <Support>https://github.com/joshmans/unraid-active-directory-extras/issues</Support>
