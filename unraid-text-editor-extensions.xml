@@ -1,0 +1,17 @@
+<Plugin>
+  <Name>Editable File Types</Name>
+  <Overview>Choose which file extensions Unraid's File Manager opens in its text editor, from a settings page instead of editing /boot/config/editor.cfg by hand. Tick common text formats (json, yaml, toml, md, env, log and more) or add your own, undo the last change, or restore the file exactly as it was before the plugin touched it. A backup is written before every save. It only reads and writes that one file, runs nothing in the background and makes no network connections.</Overview>
+  <PluginURL>https://raw.githubusercontent.com/joshmans/unraid-text-editor-extensions/main/text.editor.extensions.plg</PluginURL>
+  <PluginAuthor>shwa87</PluginAuthor>
+  <Icon>https://raw.githubusercontent.com/joshmans/unraid-text-editor-extensions/main/icon/text-editor-extensions.png</Icon>
+
+  <!-- Optional entries -->
+  <Support>https://github.com/joshmans/unraid-text-editor-extensions/issues</Support>
+  <Project>https://github.com/joshmans/unraid-text-editor-extensions</Project>
+
+  <!-- Valid category entries can be generated from the Application Categorizer plugin available in Apps -->
+  <Category>Tools:Utilities</Category>
+  <!-- Minimum and maximum Unraid version.  If the plugin file has min or max attributes these entries will be ignored-->
+  <MinVer>6.10</MinVer>
+
+</Plugin>
