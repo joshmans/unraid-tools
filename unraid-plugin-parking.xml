@@ -1,0 +1,17 @@
+<Plugin>
+  <Name>Plugin Parking</Name>
+  <Overview>Keep plugins and boot packages installed, but not loaded at boot, and load them on demand. Adds a Parking tab and a Boot Packages tab to the Plugins page, and a Park button on each row of the Installed Plugins list. Shows what each plugin cost at boot and what it does on its own (schedules, background services, array hooks), checks for a newer version when you load a parked plugin, and manages the packages in /boot/extra too, including offering to park what a package needs after checking nothing else does. Removing it asks whether to move everything parked back or keep it parked.</Overview>
+  <PluginURL>https://raw.githubusercontent.com/joshmans/unraid-plugin-parking/main/plugin-parking.plg</PluginURL>
+  <PluginAuthor>shwa87</PluginAuthor>
+  <Icon>https://raw.githubusercontent.com/joshmans/unraid-plugin-parking/main/icon/plugin-parking.png</Icon>
+
+  <!-- Optional entries -->
+  <Support>https://github.com/joshmans/unraid-plugin-parking/issues</Support>
+  <Project>https://github.com/joshmans/unraid-plugin-parking</Project>
+
+  <!-- Valid category entries can be generated from the Application Categorizer plugin available in Apps -->
+  <Category>Tools:Utilities</Category>
+  <!-- Minimum and maximum Unraid version.  If the plugin file has min or max attributes these entries will be ignored-->
+  <MinVer>7.0</MinVer>
+
+</Plugin>
