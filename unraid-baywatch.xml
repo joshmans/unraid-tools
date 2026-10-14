@@ -1,0 +1,17 @@
+<Plugin>
+  <Name>Bay Watch</Name>
+  <Overview>Every bay needs a lifeguard. Bay Watch maps your physical drive bays, hot-swap trays, and PCIe NVMe carriers to a visual tray map, with per-drive array/pool role, capacity, manufacturer branding, and SMART health history over time (no slow-motion running required). Formerly Disk Location Next. It is an independent project, not affiliated with the Disk Location plugin or its author. Built as a standalone service against Unraid's native unraid-api (Unraid 7.2+) instead of a classic PHP webGUI plugin.</Overview>
+  <PluginURL>https://raw.githubusercontent.com/joshmans/unraid-baywatch/main/plugin/unraid-baywatch.plg</PluginURL>
+  <PluginAuthor>shwa87</PluginAuthor>
+  <Icon>https://raw.githubusercontent.com/joshmans/unraid-baywatch/main/icon/unraid-baywatch.png</Icon>
+
+  <!-- Optional entries -->
+  <Support>https://github.com/joshmans/unraid-baywatch/issues</Support>
+  <Project>https://github.com/joshmans/unraid-baywatch</Project>
+
+  <!-- Valid category entries can be generated from the Application Categorizer plugin available in Apps -->
+  <Category>Tools:System</Category>
+  <!-- Minimum and maximum Unraid version.  If the plugin file has min or max attributes these entries will be ignored-->
+  <MinVer>7.2</MinVer>
+
+</Plugin>
