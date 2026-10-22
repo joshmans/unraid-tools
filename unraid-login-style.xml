@@ -1,0 +1,17 @@
+<Plugin>
+  <Name>Login Style</Name>
+  <Overview>Give the Unraid login page a dark look. Pick a colour preset (Midnight, Graphite or Ember) or set your own colours, add a background image and your own logo, and choose always dark or follow Unraid's theme. Unraid has no setting for the login page, so the plugin adds one include line to the login page file at install and at every boot, checks that the page still parses, and takes the line out again when you uninstall or switch the style off; it never replaces the page from a backup, so an OS update is not overwritten. It only restyles the page: how signing in works is not touched, and if anything fails the stock login page is shown. It makes no network connections of its own.</Overview>
+  <PluginURL>https://raw.githubusercontent.com/joshmans/unraid-login-style/main/unraid-login-style.plg</PluginURL>
+  <PluginAuthor>shwa87</PluginAuthor>
+  <Icon>https://raw.githubusercontent.com/joshmans/unraid-login-style/main/icon/unraid-login-style.png</Icon>
+
+  <!-- Optional entries -->
+  <Support>https://github.com/joshmans/unraid-login-style/issues</Support>
+  <Project>https://github.com/joshmans/unraid-login-style</Project>
+
+  <!-- Valid category entries can be generated from the Application Categorizer plugin available in Apps -->
+  <Category>Tools:System</Category>
+  <!-- Minimum and maximum Unraid version.  If the plugin file has min or max attributes these entries will be ignored-->
+  <MinVer>7.2</MinVer>
+
+</Plugin>
