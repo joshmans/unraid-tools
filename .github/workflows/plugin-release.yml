@@ -1,0 +1,121 @@
+# Shared release workflow for joshmans' Unraid plugins.
+#
+# A plugin repo calls this from a ~20-line workflow (see the README section
+# "Plugin release workflow"). The release version is the top "## " heading of
+# the repo's CHANGELOG.md (YYYY.MM.DD[letter]). Bumping that heading in a PR is
+# the whole release procedure; nobody builds or hashes anything by hand.
+#
+#   1. run the repo's tests (if it has any)
+#   2. run ./build.sh <version>  (builds packages/*-<version>.txz, stamps the
+#      .plg with the version and the package's SHA-256, copies the changelog in)
+#   3. if publish is true and no release with that tag exists yet:
+#        create the GitHub release with the .txz attached, THEN
+#        commit the stamped .plg back to the default branch
+#
+# The release is created before the .plg commit so the .plg on the default branch
+# never points at a file that does not exist yet. Pushing with GITHUB_TOKEN does
+# not start another workflow run.
+#
+# If the tag already exists (any push that is not a version bump) steps 1 and 2
+# still run as a check, and nothing is published.
+name: Plugin release
+
+on:
+  workflow_call:
+    inputs:
+      plg:
+        description: Path to the .plg file, relative to the repo root
+        type: string
+        required: true
+      test-command:
+        description: Shell command that runs the tests (empty = none)
+        type: string
+        default: ""
+      build-command:
+        description: Build script; the version is passed as its only argument
+        type: string
+        default: ./build.sh
+      tag-prefix:
+        description: Prefix for the release tag (empty = tag is the bare version)
+        type: string
+        default: ""
+      publish:
+        description: Create the release and commit the stamped .plg (false = check only)
+        type: boolean
+        default: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Read the version from CHANGELOG.md
+        id: ver
+        env:
+          TAG_PREFIX: ${{ inputs.tag-prefix }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version=$(awk '/^## /{print $2; exit}' CHANGELOG.md)
+          if ! printf '%s' "$version" | grep -Eq '^[0-9]{4}\.[0-9]{2}\.[0-9]{2}[a-z]?$'; then
+            echo "::error::Top CHANGELOG.md heading is '$version', expected YYYY.MM.DD[letter]"
+            exit 1
+          fi
+          tag="${TAG_PREFIX}${version}"
+          if gh release view "$tag" >/dev/null 2>&1; then exists=true; else exists=false; fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "exists=$exists" >> "$GITHUB_OUTPUT"
+          echo "Version $version, tag $tag, release already exists: $exists"
+
+      - name: Run tests
+        if: inputs.test-command != ''
+        env:
+          TEST_COMMAND: ${{ inputs.test-command }}
+        run: bash -c "$TEST_COMMAND"
+
+      - name: Build
+        env:
+          BUILD_COMMAND: ${{ inputs.build-command }}
+          VERSION: ${{ steps.ver.outputs.version }}
+        run: |
+          $BUILD_COMMAND "$VERSION"
+          ls -l packages/
+          test "$(ls packages/*-"$VERSION".txz | wc -l)" = 1
+
+      - name: Create the GitHub release
+        if: inputs.publish && steps.ver.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.ver.outputs.version }}
+          TAG: ${{ steps.ver.outputs.tag }}
+        run: |
+          # release notes = this version's section of the changelog
+          awk -v v="$VERSION" '/^## /{if (f) exit; f = ($2 == v); next} f' CHANGELOG.md \
+            | sed -e '/./,$!d' > release-notes.md
+          test -s release-notes.md
+          gh release create "$TAG" packages/*-"$VERSION".txz \
+            --title "$TAG" --notes-file release-notes.md --target "$GITHUB_SHA"
+          rm -f release-notes.md
+
+      - name: Commit the stamped .plg
+        if: inputs.publish && steps.ver.outputs.exists == 'false'
+        env:
+          PLG: ${{ inputs.plg }}
+          VERSION: ${{ steps.ver.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add "$PLG"
+          if git diff --cached --quiet; then echo "plg already up to date"; exit 0; fi
+          git commit -m "Release $VERSION: stamp $PLG with the built package's version and SHA-256"
+          branch="${GITHUB_REF_NAME}"
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin "$branch" && git push origin "HEAD:$branch" && exit 0
+            sleep $((i * 3))
+          done
+          echo "::error::could not push the stamped plg"; exit 1
