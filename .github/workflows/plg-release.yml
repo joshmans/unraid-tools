@@ -1,0 +1,75 @@
+# Shared release workflow for joshmans' Unraid plugins that are a single .plg file
+# (no package: the code is inside the .plg). A repo calls this from a short workflow.
+#
+# The release version is the .plg's `version` entity (YYYY.MM.DD[letter]). Bumping it,
+# together with a "###<version>" block at the top of the .plg's <CHANGES>, in a PR is the
+# whole release procedure.
+#
+#   1. check the .plg is well-formed XML and that CHANGES has a block for its version
+#   2. if publish is true and no release with that tag exists yet, create the GitHub
+#      release, with that CHANGES block as its notes
+#
+# Nothing is built and nothing is committed back. If the tag already exists (any push
+# that is not a version bump) only the check runs.
+name: Plugin (plg only) release
+
+on:
+  workflow_call:
+    inputs:
+      plg:
+        description: Path to the .plg file, relative to the repo root
+        type: string
+        required: true
+      tag-prefix:
+        description: Prefix for the release tag (empty = tag is the bare version)
+        type: string
+        default: ""
+      publish:
+        description: Create the release (false = check only)
+        type: boolean
+        default: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check the plugin file and read its version
+        id: ver
+        env:
+          PLG: ${{ inputs.plg }}
+          TAG_PREFIX: ${{ inputs.tag-prefix }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python3 - "$PLG" <<'PY'
+          import re, sys, xml.etree.ElementTree as E
+          plg = sys.argv[1]
+          text = open(plg, encoding="utf-8").read()
+          E.fromstring(text.encode())  # well-formed, with the DOCTYPE entities resolved
+          m = re.search(r'<!ENTITY version\s+"([^"]+)"', text)
+          if not m: sys.exit("::error::no version entity in " + plg)
+          version = m.group(1)
+          if not re.fullmatch(r"\d{4}\.\d{2}\.\d{2}[a-z]?", version):
+              sys.exit(f"::error::version '{version}' is not YYYY.MM.DD[letter]")
+          block = re.search(r"###" + re.escape(version) + r"\s*\n(.*?)(?=\n###|\n</CHANGES>)", text, flags=re.S)
+          if not block: sys.exit(f"::error::<CHANGES> has no '###{version}' block")
+          open("release-notes.md", "w").write(block.group(1).strip() + "\n")
+          open("version.txt", "w").write(version)
+          PY
+          version=$(cat version.txt)
+          tag="${TAG_PREFIX}${version}"
+          if gh release view "$tag" >/dev/null 2>&1; then exists=true; else exists=false; fi
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+          echo "exists=$exists" >> "$GITHUB_OUTPUT"
+          echo "Version $version, tag $tag, release already exists: $exists"
+
+      - name: Create the GitHub release
+        if: inputs.publish && steps.ver.outputs.exists == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.ver.outputs.tag }}
+        run: gh release create "$TAG" --title "$TAG" --notes-file release-notes.md --target "$GITHUB_SHA"

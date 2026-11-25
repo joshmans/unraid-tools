@@ -35,6 +35,10 @@ on:
         description: Build script; the version is passed as its only argument
         type: string
         default: ./build.sh
+      package-dir:
+        description: Folder the build script writes the .txz to
+        type: string
+        default: packages
       tag-prefix:
         description: Prefix for the release tag (empty = tag is the bare version)
         type: string
@@ -81,16 +85,18 @@ jobs:
       - name: Build
         env:
           BUILD_COMMAND: ${{ inputs.build-command }}
+          PACKAGE_DIR: ${{ inputs.package-dir }}
           VERSION: ${{ steps.ver.outputs.version }}
         run: |
           $BUILD_COMMAND "$VERSION"
-          ls -l packages/
-          test "$(ls packages/*-"$VERSION".txz | wc -l)" = 1
+          ls -l "$PACKAGE_DIR/"
+          test "$(ls "$PACKAGE_DIR"/*-"$VERSION".txz | wc -l)" = 1
 
       - name: Create the GitHub release
         if: inputs.publish && steps.ver.outputs.exists == 'false'
         env:
           GH_TOKEN: ${{ github.token }}
+          PACKAGE_DIR: ${{ inputs.package-dir }}
           VERSION: ${{ steps.ver.outputs.version }}
           TAG: ${{ steps.ver.outputs.tag }}
         run: |
@@ -98,7 +104,7 @@ jobs:
           awk -v v="$VERSION" '/^## /{if (f) exit; f = ($2 == v); next} f' CHANGELOG.md \
             | sed -e '/./,$!d' > release-notes.md
           test -s release-notes.md
-          gh release create "$TAG" packages/*-"$VERSION".txz \
+          gh release create "$TAG" "$PACKAGE_DIR"/*-"$VERSION".txz \
             --title "$TAG" --notes-file release-notes.md --target "$GITHUB_SHA"
           rm -f release-notes.md
 
